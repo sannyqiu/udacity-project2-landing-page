@@ -31,16 +31,33 @@
  */
 
 // build the nav
-buildNav = () => {
-  const navItemArray = ["Section 1", "Section 2", "Section 3", "Section 4"];
+// buildNav = () => {
+//   const navItemArray = ["Section 1", "Section 2", "Section 3", "Section 4"];
 
-  const navList = document.querySelector("ul");
-  // navList.className = "navbar__menu";
-  for (const navItem of navItemArray) {
+//   const navList = document.querySelector("ul");
+//   // navList.className = "navbar__menu";
+//   for (const navItem of navItemArray) {
+//     const listItem = document.createElement("li");
+//     listItem.className = "navbar__menu";
+//     listItem.innerHTML = `<a href="#" class="menu__link">${navItem}</a>`;
+//     navList.appendChild(listItem);
+//   }
+// };
+
+// buildNav();
+
+buildNav = () => {
+  const navBarList = document.querySelector("ul");
+  navBarList.id = "navbar__list";
+  // const sections = document.querySelectorAll("section");
+  const sections = document.getElementsByTagName("section");
+
+  for (const section of sections) {
     const listItem = document.createElement("li");
-    listItem.className = "navbar__menu";
-    listItem.innerHTML = `<a href="#" class="menu__link">${navItem}</a>`;
-    navList.appendChild(listItem);
+    // listItem.className = "navbar__menu";
+    listItem.innerHTML = `<a href="#${section.id}" class="menu__link" data-id="${section.id}">${section.dataset.nav}</a>`;
+    navBarList.appendChild(listItem);
+    // console.log(listItem);
   }
 };
 
@@ -50,18 +67,39 @@ buildNav();
 
 makeActive = () => {
   const sections = document.querySelectorAll("section");
+  // console.log(sections);
+  // const sections = document.getElementsByTagName("section");
+
   for (const section of sections) {
     const box = section.getBoundingClientRect();
-    console.log(box);
+    const id = document.querySelectorAll(`[data-id="${section.id}"]`)[0];
     // You can play with the values in the "if" condition to further make it more accurate.
-    if (box.top <= 150 && box.bottom >= 150) {
+    if (box.top <= 300 && box.bottom >= 300) {
+      section.classList.add("your-active-class");
+
+      console.log(id);
+      id.classList.add("active");
+      // const id = section.getAttribute("id");
+      // document.querySelector(`.${idd}`).classList.add("active");
+
       // Apply active state on the current section and the corresponding Nav link.
     } else {
+      section.classList.remove("your-active-class");
+      console.log(id);
+      id.classList.remove("active");
+      // const id = document.querySelectorAll(
+      //   `[data-id="${section.dataset.nav}"]`
+      // );
+      // document.getElementById(`${id}`).classList.remove("active");
       // Remove active state from other section and corresponding Nav link.
     }
+    // console.log(section);
   }
 };
-makeActive();
+
+document.addEventListener("scroll", function () {
+  makeActive();
+});
 
 // Scroll to anchor ID using scrollTO event
 
