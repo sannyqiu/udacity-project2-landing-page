@@ -82,13 +82,7 @@ document.addEventListener("scroll", function () {
 });
 
 // Hide and show nav bar
-document.addEventListener(
-  "scroll",
-  function () {
-    hideNav();
-  },
-  false
-);
+document.addEventListener("scroll", hideNav);
 
 document.addEventListener("scroll", function () {
   nav.style.display = "block";
